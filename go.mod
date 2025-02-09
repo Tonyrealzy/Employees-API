@@ -2,7 +2,12 @@ module my-crud-project
 
 go 1.23.5
 
-require go.mongodb.org/mongo-driver v1.17.2
+require (
+	github.com/google/uuid v1.6.0
+	github.com/gorilla/mux v1.8.1
+	github.com/joho/godotenv v1.5.1
+	go.mongodb.org/mongo-driver v1.17.2
+)
 
 require (
 	github.com/golang/snappy v0.0.4 // indirect
