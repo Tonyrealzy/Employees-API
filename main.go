@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"log"
-	"my-crud-project/handlers"
 	"my-crud-project/usecase"
 	"net/http"
 	"os"
@@ -43,9 +42,14 @@ func main() {
 
 	// create empoyee service
 	employeeService := usecase.EmployeeService{MongoCollection: collection}
-	
+
 	r := mux.NewRouter()
-	r.HandleFunc("/health", handlers.HealthHandler).Methods(http.MethodGet)
+	r.HandleFunc("/create-employee", employeeService.CreateEmployee).Methods(http.MethodPost)
+	r.HandleFunc("/get-employee/{id}", employeeService.GetEmployeeById).Methods(http.MethodGet)
+	r.HandleFunc("/get-employees", employeeService.GetAllEmployees).Methods(http.MethodGet)
+	r.HandleFunc("/update-employee/{id}", employeeService.UpdateEmployeeById).Methods(http.MethodPut)
+	r.HandleFunc("/delete-employee/{id}", employeeService.DeleteEmployeeById).Methods(http.MethodDelete)
+	r.HandleFunc("/delete-employees", employeeService.DeleteAllEmployees).Methods(http.MethodDelete)
 
 	log.Println("server running on port 8080")
 	http.ListenAndServe(":8080", r)
